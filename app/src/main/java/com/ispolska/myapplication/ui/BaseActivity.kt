@@ -16,9 +16,4 @@ abstract class BaseActivity<VBinding : ViewBinding>(private val inflaterMethod: 
         _binding = inflaterMethod.invoke(layoutInflater)
         setContentView(binding.root)
     }
-
-    override fun onDestroy() {
-        _binding = null
-        super.onDestroy()
-    }
 }
