@@ -10,6 +10,7 @@
     <!--  Header text  -->
     <style name="text_header" parent="text_font">
         <item name="android:textSize">@dimen/text_header_size</item>
+        <item name="android:textColor">?attr/colorOnPrimary</item>
     </style>
 
     <!--  Big text  -->

@@ -34,6 +34,7 @@
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvFillFormProposal"
         style="@style/text_small"
+        android:textColor="?attr/colorOnPrimary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_default"
@@ -181,6 +182,7 @@
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvOr"
         style="@style/text_big"
+        android:textColor="?attr/colorOnPrimary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_default"
@@ -192,6 +194,7 @@
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnRegister"
         style="@style/text_button_caps"
+        android:textColor="?attr/colorOnPrimary"
         android:layout_width="match_parent"
         android:layout_height="@dimen/height_btn_register"
         android:layout_marginTop="@dimen/margin_default"
@@ -205,6 +208,7 @@
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvTerms"
         style="@style/text_small"
+        android:textColor="?attr/colorOnPrimary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_middle"
@@ -229,6 +233,7 @@
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvSignIn"
         style="@style/text_middle"
+        android:textColor="?attr/colorOnPrimary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/sign_in_button"

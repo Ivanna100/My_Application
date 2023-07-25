@@ -2,8 +2,6 @@ package com.ispolska.myapplication.ui
 
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.util.Log
-import androidx.appcompat.app.AppCompatActivity
 import com.ispolska.myapplication.R
 import com.ispolska.myapplication.common.Constants.APP_PREFERENCES
 import com.ispolska.myapplication.common.Constants.DELIMITER_AT
@@ -14,15 +12,16 @@ import com.ispolska.myapplication.common.Constants.SURNAME
 import com.ispolska.myapplication.databinding.MainLayoutBinding
 import com.ispolska.myapplication.utils.extensions.capitalizeFirstChar
 
-class MainActivity : AppCompatActivity(){
-//    BaseActivity<MainLayoutBinding>(MainLayoutBinding::inflate) {
+class MainActivity :
+//    AppCompatActivity(){
+    BaseActivity<MainLayoutBinding>(MainLayoutBinding::inflate) {
     private lateinit var preferences: SharedPreferences
-    lateinit var binding: MainLayoutBinding
+//    lateinit var binding: MainLayoutBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = MainLayoutBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        Log.d("mytech", "onCreate")
+//        binding = MainLayoutBinding.inflate(layoutInflater)
+//        setContentView(binding.root)
+//        Log.d("mytech", "onCreate")
         preferences = getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE)
         parseEmailToPrefs()
         setNameInTextView()
