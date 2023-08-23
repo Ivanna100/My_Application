@@ -73,9 +73,9 @@
         android:id="@+id/imageViewNavigationUp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/largest_margin"
         android:src="@drawable/ic_navigation_up"
-        android:visibility="invisible"
+        app:layout_constraintHorizontal_bias="0.8"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 

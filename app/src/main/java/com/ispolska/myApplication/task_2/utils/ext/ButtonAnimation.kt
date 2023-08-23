@@ -5,7 +5,7 @@ import android.view.ViewPropertyAnimator
 
 fun View.animateVisibility(visibility: Int) {
     val animator: ViewPropertyAnimator = when (visibility) {
-        View.VISIBLE -> animate().alpha(1f).setDuration(300)
+        View.VISIBLE -> animate().alpha(1f).setDuration(300) // TODO: maybe to constants
         View.GONE -> animate().alpha(0f).setDuration(300)
         else -> return
     }

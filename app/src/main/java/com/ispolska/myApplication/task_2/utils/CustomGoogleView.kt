@@ -11,9 +11,12 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import com.example.task_2.R
 
-class CustomGoogleView(context: Context, attrs: AttributeSet) : AppCompatButton(context, attrs) {
+class CustomGoogleView(
+    context: Context,
+    attrs: AttributeSet
+) : AppCompatButton(context, attrs) {
 
-    private val defaultTextSize: Int = 15
+    private val defaultTextSize: Int = 15 // TODO: to constants
     private val defaultTextColor = Color.BLACK
 
     init {
@@ -87,5 +90,4 @@ class CustomGoogleView(context: Context, attrs: AttributeSet) : AppCompatButton(
             null
         )
     }
-
 }
