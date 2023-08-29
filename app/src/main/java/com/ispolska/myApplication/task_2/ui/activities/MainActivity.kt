@@ -1,11 +1,11 @@
 package com.ispolska.myApplication.task_2.ui.activities
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -28,6 +28,7 @@ class MainActivity : AppCompatActivity() {
     private val binding: ActivityContactsBinding by lazy {
         ActivityContactsBinding.inflate(layoutInflater)
     }
+
     private val adapter: RecyclerViewAdapter by lazy {
         RecyclerViewAdapter(listener = object : UserItemClickListener {
             override fun onUserDelete(user: User, position: Int) {
@@ -53,6 +54,7 @@ class MainActivity : AppCompatActivity() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.users.collect {
+                    Log.d("log observer", it.toString())
                     adapter.submitList(it)
                 }
             }
@@ -132,10 +134,11 @@ class MainActivity : AppCompatActivity() {
                 Snackbar.LENGTH_LONG
             )
                 .setAction(getString(R.string.restore)) {
-                    if (viewModel.addUser(user, position)) {
+                    viewModel.addUser(user, position)
+//                    {
 //                        adapter.notifyItemInserted(position)
 //                        adapter.updateUsers(viewModel.getUserList())
-                    }
+//                    }
                 }.show()
         }
     }

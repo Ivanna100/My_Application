@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ispolska.myApplication.task_2.ui.activities.interfaces.UserItemClickListener
 import com.example.task_2.databinding.ItemUserBinding
 import com.ispolska.myApplication.task_2.data.model.User
-import com.ispolska.myApplication.task_2.ui.contactAdapter.utils.MyDiffUtil
 import com.ispolska.myApplication.task_2.utils.ext.loadImage
 
 

@@ -1,7 +1,5 @@
 package com.ispolska.myApplication.task_2.ui.activities
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.ispolska.myApplication.task_2.data.localuserdataset.LocalUserData
 import com.ispolska.myApplication.task_2.data.model.User
@@ -13,32 +11,38 @@ class UserViewModel : ViewModel() {
     private val _users = MutableStateFlow<List<User>>(emptyList())
     val users = _users.asStateFlow()
 
-    private val _test: MutableLiveData<User> = MutableLiveData<User>()
-    val test: LiveData<User> get() = _test
+// LiveData
+//    private val _test: MutableLiveData<User> = MutableLiveData<User>()
+//    val test: LiveData<User> get() = _test
 
     init {
-        _users.value.toMutableList().apply {
-            addAll(LocalUserData().getLocalContactsList())
-        }
+        _users.value = LocalUserData().getLocalContactsList()
+//            .toMutableList().apply {
+//            addAll(LocalUserData().getLocalContactsList())
+//        }
     }
 
     fun getUserList(): List<User> = users.value
 
     fun deleteUser(user: User): Boolean {
-        if (_users.value.contains(user)) {
-            _users.value.toMutableList().apply {
-                remove(user)
-            }
+        val users2 = _users.value.toMutableList()
+        if (users2.contains(user)) {
+//            _users.value.toMutableList().apply {
+                users2.remove(user)
+            _users.value = users2
+//            }
             return true
         }
         return false
     }
 
     fun addUser(user: User, position: Int): Boolean {
-        if (!_users.value.contains(user)) {
-            _users.value.toMutableList().apply {
-                add(position, user)
-            }
+        val usersCopy = _users.value.toMutableList()
+        if (!usersCopy.contains(user)) {
+//            _users.value.toMutableList().apply {
+                usersCopy.add(position, user)
+            _users.value = usersCopy
+//            }
             return true
         }
         return false
