@@ -3,9 +3,9 @@ package com.ispolska.myApplication.task_2.utils
 import android.content.Context
 import android.content.res.TypedArray
 import android.graphics.Color
-import android.util.AttributeSet
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.InsetDrawable
+import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatButton
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
@@ -13,7 +13,7 @@ import com.example.task_2.R
 
 class CustomGoogleView(context: Context, attrs: AttributeSet) : AppCompatButton(context, attrs) {
 
-    private val defaultTextSize: Int = 15
+    private val defaultTextSize: Int = Constants.CUSTOM_VIEW_DEFAULT_TEXT_SIZE
     private val defaultTextColor = Color.BLACK
 
     init {

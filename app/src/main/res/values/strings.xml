@@ -26,6 +26,4 @@
     <string name="logout">Logout</string>
     <string name="s_has_been_removed">%s has been removed</string>
     <string name="restore">Restore</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

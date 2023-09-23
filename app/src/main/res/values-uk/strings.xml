@@ -27,4 +27,6 @@
     <string name="logout">Вийти</string>
     <string name="s_has_been_removed">%s було видалено</string>
     <string name="restore">Відновити</string>
+    <string name="DIALOG_POSITIVE_BUTTON">"Зберегти"</string>
+    <string name="DIALOG_NEGATIVE_BUTTON">"Вийти"</string>
 </resources>

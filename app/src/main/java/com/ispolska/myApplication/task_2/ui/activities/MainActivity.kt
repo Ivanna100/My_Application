@@ -1,55 +1,75 @@
 package com.ispolska.myApplication.task_2.ui.activities
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.task_2.R
 import com.example.task_2.databinding.ActivityContactsBinding
+import com.google.android.material.snackbar.Snackbar
 import com.ispolska.myApplication.task_2.domain.model.User
 import com.ispolska.myApplication.task_2.repository.UserItemClickListener
-import com.ispolska.myApplication.task_2.ui.contactAdapter.RecyclerViewAdapter
+import com.ispolska.myApplication.task_2.ui.contactAdapter.UserListAdapter
 import com.ispolska.myApplication.task_2.ui.fragments.DialogFragment
 import com.ispolska.myApplication.task_2.utils.Constants
 import com.ispolska.myApplication.task_2.utils.ext.animateVisibility
-import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity(), UserItemClickListener {
 
-    private lateinit var binding: ActivityContactsBinding
-    private lateinit var adapter: RecyclerViewAdapter
+    private val binding: ActivityContactsBinding by lazy {
+        ActivityContactsBinding.inflate(layoutInflater)
+    }
 
-    private var userViewModel = UserViewModel()
+    private val adapter: UserListAdapter by lazy {
+        UserListAdapter(listener = object : UserItemClickListener {
+            override fun onUserDelete(user: User, position: Int) {
+                deleteUserWithRestore(user, position)
+            }
+        })
+    }
+
+    private val viewModel : UserViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityContactsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        adapter = RecyclerViewAdapter()
+        setObserver()
         initialRecyclerview()
         showAddContactsDialog()
         setNavigationUpListeners()
     }
 
+    private fun setObserver() {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.users.collect {
+                    Log.d("log", it.toString())
+                    adapter.submitList(it)
+                }
+            }
+        }
+    }
+
     private fun initialRecyclerview() {
         setTouchRecycleItemListener()
-        userViewModel = ViewModelProvider(this)[UserViewModel::class.java]
         val layoutManager = LinearLayoutManager(this)
-        adapter.setUserItemClickListener(this)
         binding.recyclerViewContacts.layoutManager = layoutManager
         binding.recyclerViewContacts.adapter = adapter
-        adapter.updateUsers(userViewModel.getUserList())
     }
 
     private fun showAddContactsDialog() {
         binding.textViewAddContacts.setOnClickListener {
             val dialogFragment = DialogFragment()
-            dialogFragment.setViewModel(userViewModel)
-            dialogFragment.setAdapter(adapter)
+            dialogFragment.setViewModel(viewModel)
             dialogFragment.show(supportFragmentManager, Constants.DIALOG_TAG)
         }
     }
@@ -78,7 +98,7 @@ class MainActivity : AppCompatActivity(), UserItemClickListener {
     }
 
     private fun setTouchCallBackListener(): ItemTouchHelper.Callback {
-        return object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+        return object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
             override fun onMove(
                 recyclerView: RecyclerView,
                 viewHolder: RecyclerView.ViewHolder,
@@ -89,8 +109,8 @@ class MainActivity : AppCompatActivity(), UserItemClickListener {
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 deleteUserWithRestore(
-                    userViewModel.getUserList()[viewHolder.adapterPosition],
-                    viewHolder.adapterPosition
+                    viewModel.getUserList()[viewHolder.bindingAdapterPosition],
+                    viewHolder.bindingAdapterPosition
                 )
             }
         }
@@ -101,20 +121,16 @@ class MainActivity : AppCompatActivity(), UserItemClickListener {
     }
 
     fun deleteUserWithRestore(user: User, position: Int) {
-        if (userViewModel.deleteUser(user)) {
-            adapter.notifyItemRemoved(position)
-            adapter.updateUsers(userViewModel.getUserList())
+        if (viewModel.deleteUser(user)) {
             Snackbar.make(
                 binding.recyclerViewContacts,
                 getString(R.string.s_has_been_removed).format(user.name),
                 Snackbar.LENGTH_LONG
             )
                 .setAction(getString(R.string.restore)) {
-                    if (userViewModel.addUser(user, position)) {
-                        adapter.notifyItemInserted(position)
-                        adapter.updateUsers(userViewModel.getUserList())
-                    }
-                }.show()
+                    viewModel.addUser(user, position)
+                }
+                .show()
         }
     }
 }
